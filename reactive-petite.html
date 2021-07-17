@@ -1,0 +1,44 @@
+<html>
+  <script src="https://unpkg.com/petite-vue"></script>
+  <!-- local data object -->
+  <div
+    v-scope="{ 
+      localName: 'Local PE', 
+      localNumber: 0,
+      get reverseName() {
+        return this.localName.split('').reverse().join('')
+      },
+      addNumber() {
+        this.localName = this.localName + ' ' + this.localNumber++;
+      },
+     }"
+  >
+    <h2>Global</h2>
+    <!-- using global reactive data object -->
+    <p>Name : {{ store.globalName }}</p>
+    <p>Reverse Name : {{ store.reverseName }}</p>
+    <button @click="store.addNumber">Add Number to Global Name</button>
+    <h2>Local</h2>
+    <!-- using local reactive data object -->
+    <p>Name : {{ localName }}</p>
+    <p>Reverse Name : {{ reverseName }}</p>
+    <button @click="addNumber">Add Number to Local Name</button>
+  </div>
+  <script>
+    // global reactive store
+    const store = PetiteVue.reactive({
+      globalName: "Global PE",
+      globalNumber: 0,
+      // getters
+      get reverseName() {
+        return this.globalName.split("").reverse().join("");
+      },
+      // methods
+      addNumber() {
+        this.globalName = this.globalName + " " + this.globalNumber++;
+      },
+    });
+    // pass reactive object to createApp, so that it will act as global store
+    PetiteVue.createApp({ store }).mount();
+  </script>
+</html>

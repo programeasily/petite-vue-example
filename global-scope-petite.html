@@ -1,0 +1,24 @@
+<html>
+  <script src="https://unpkg.com/petite-vue"></script>
+  <!-- global data object passed to createApp available -->
+  <div v-scope>
+    <p>{{ name }}</p>
+    <p>{{ reverseName }}</p>
+    <button @click="addNumber">Add Number to Name</button>
+  </div>
+  <script>
+    PetiteVue.createApp({
+      // available to all expressions and act as reactive data
+      name: "Program Easily",
+      number: 0,
+      // getters
+      get reverseName() {
+        return this.name.split("").reverse().join("");
+      },
+      // methods
+      addNumber() {
+        this.name = this.name + " " + this.number++;
+      },
+    }).mount();
+  </script>
+</html>
